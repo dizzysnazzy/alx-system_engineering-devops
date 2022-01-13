@@ -32,3 +32,24 @@ defaults
 	errorfile 502 /etc/haproxy/errors/502.http
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
+
+frontend load_balancer
+	bind	0.0.0.0:80
+	bind	0.0.0.0:443 ssl crt /etc/ssl/www.dizzysnazzy.tech/www.dizzysnazzy.tech.pem
+	mode	http
+
+	redirect scheme https code 301 if !{ ssl_fc }
+
+	acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+	use_backend letsencrypt-backend if letsencrypt-acl
+
+	default_backend	web_servers
+
+backend letsencrypt-backend
+	server letsencrypt 127.0.0.1:8888
+
+backend web_servers
+	balance	roundrobin
+	mode	http
+	server	1256-web-01 35.196.89.247:80
+	server	1256-web-02 3.238.171.88:80
