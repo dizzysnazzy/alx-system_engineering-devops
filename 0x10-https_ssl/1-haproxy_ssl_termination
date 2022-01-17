@@ -33,24 +33,27 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-listen dizzysnazzy
-        bind :80
-        mode http
-        balance roundrobin
-        server 1256-web-01 35.196.89.247:80 check
-        server 1256-web-02 3.238.171.88:80 check
+frontend Local_Server
+   # bind 3.236.220.41:80
+    bind *:80
+    mode http
+    default_backend My_Web_Servers
 
-frontend www-http
-        bind :80
-        reqadd X-Forwarded-Proto:\ http
-        default_backend web-backend
+backend My_Web_Servers
+    mode http
+    balance roundrobin
+    option forwardfor
+    http-request set-header X-Forwarded-Port %[dst_port]
+    http-request add-header X-Forwarded-Proto https if { ssl_fc }
+    option httpchk HEAD / HTTP/1.1rnHost:localhost
+    server web-01.dizzysnazzy.tech  35.196.89.247:80
+    server web-02.dizzysnazzy.tech  3.238.171.88:80
 
-frontend www-https
-        bind :443 ssl crt /etc/haproxy/ssl/www.dizzysnazzy.tech.pem
-        reqadd X-Forwarded-Proto:\ https
-        default_backend web-backend
-
-backend web-backend
-        redirect scheme https if !{ ssl_fc }
-        server 1256-web-01 35.196.89.247:80 check
-        server 1256-web-02 3.238.171.88:80 check
+listen stats 
+    bind *:443
+    stats enable
+    stats hide-version
+    stats refresh 30s
+    stats show-node
+    stats auth username:password
+    stats uri  /stats
