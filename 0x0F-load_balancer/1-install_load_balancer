@@ -48,6 +48,12 @@ backend web_servers
     balance roundrobin
     server 1256-web-01 34.236.190.5:80 check
     server 1256-web-02 3.236.46.155:80 check
+
+listen stats
+    bind :80
+    mode http
+    server 1256-web-01 34.236.190.5:80 check
+    server 1256-web-02 3.236.46.155:80 check
 " >> /etc/haproxy/haproxy.cfg
 
 sed -i '/#EXTRAOPTS="-de -m 16"/a ENABLED=1' /etc/default/haproxy
