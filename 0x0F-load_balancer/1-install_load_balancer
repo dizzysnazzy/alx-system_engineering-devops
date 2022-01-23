@@ -50,5 +50,7 @@ backend web_servers
     server 1256-web-02 3.236.46.155:80 check
 " >> /etc/haproxy/haproxy.cfg
 
+sed -i '/#EXTRAOPTS="-de -m 16"/a ENABLED=1' /etc/default/haproxy
+
 sudo service haproxy start
 sudo systemctl status haproxy
