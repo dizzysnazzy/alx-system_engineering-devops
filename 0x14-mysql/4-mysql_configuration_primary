@@ -34,6 +34,7 @@ log-error	= /var/log/mysql/error.log
 # By default we only accept connections from localhost
 #bind-address	= 127.0.0.1
 #bind-address    = 34.236.190.5
+port            = 3306
 server-id       = 1
 log_bin         = /var/log/mysql/mysql-bin.log
 binlog_do_db    = tyrell_corp
