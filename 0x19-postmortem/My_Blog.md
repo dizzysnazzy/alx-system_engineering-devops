@@ -1,6 +1,6 @@
 # Postmortem
 
-![post mortem](post-mortem.jpg)
+![post mortem](post-mortem.png)
 
 ## Issue Summary
 
