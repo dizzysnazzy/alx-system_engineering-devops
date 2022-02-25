@@ -4,7 +4,7 @@
 
 ## Issue Summary
 
-Issue
+Issu
 
 ## Timeline
 
