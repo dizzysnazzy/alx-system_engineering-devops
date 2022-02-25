@@ -22,7 +22,8 @@ Host *
 #   ForwardAgent no
 #   ForwardX11 no
 #   ForwardX11Trusted yes
-   PasswordAuthentication no 
+#   PasswordAuthentication yes
+   PasswordAuthentication no
 #   HostbasedAuthentication no
 #   GSSAPIAuthentication no
 #   GSSAPIDelegateCredentials no
@@ -34,6 +35,7 @@ Host *
 #   ConnectTimeout 0
 #   StrictHostKeyChecking ask
 #   IdentityFile ~/.ssh/id_rsa
+   IdentityFile ~/.ssh/school
 #   IdentityFile ~/.ssh/id_dsa
 #   IdentityFile ~/.ssh/id_ecdsa
 #   IdentityFile ~/.ssh/id_ed25519
@@ -50,4 +52,3 @@ Host *
     SendEnv LANG LC_*
     HashKnownHosts yes
     GSSAPIAuthentication yes
-    IdentityFile ~/.ssh/school
